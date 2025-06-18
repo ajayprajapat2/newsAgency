@@ -1,13 +1,20 @@
 class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern  
+  allow_browser versions: :modern 
+
+  def route_not_found
+    if request.path.start_with?('/admin') || request.path.start_with?('/admins')
+      redirect_to admin_dashboards_path, alert: "Page not found. Redirected to dashboard."
+    else
+      redirect_to root_path, alert: "Page not found. Redirected to home."
+    end
+  end 
 
   def after_sign_in_path_for(resource)
     case resource
     when Admin
-      admin_dashboards_path # or whatever path you want for admins
+      admin_dashboards_path
     when User
-      user_dashboard_path # or root_path for regular users
+      user_dashboard_path 
     else
       root_path
     end

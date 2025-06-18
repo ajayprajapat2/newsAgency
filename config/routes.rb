@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     resources :users
     resources :dashboards
   end
+  
+  match '*unmatched', to: 'application#route_not_found', via: :all
 
 
   root "homes#index"
