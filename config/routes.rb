@@ -1,16 +1,18 @@
 Rails.application.routes.draw do
-  devise_for :admins
+  devise_for :admins 
   devise_for :users
 
   namespace :admin do
     resources :users
     resources :dashboards
   end
+
   
   match '*unmatched', to: 'application#route_not_found', via: :all
 
 
   root "homes#index"
+  resources :posts
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
